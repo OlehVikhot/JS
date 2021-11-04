@@ -1,9 +1,19 @@
 "use strict";
 
-const numberOfFIles = +prompt('How many movies you wathced?', '');
+let numberOfFiles;
+
+function start() {
+   numberOfFiles = +prompt('How many movies you wathced?', '');
+
+   while (numberOfFiles == '' || numberOfFiles == null || isNaN(numberOfFiles)) {
+        numberOfFiles = +prompt('How many movies you wathced?', '');
+   }
+}
+
+start();
 
 const personalMovieDB = {
-    count: numberOfFIles,
+    count: numberOfFiles,
     movies: {},
     actors: {},
     genres: [],
@@ -19,32 +29,56 @@ const personalMovieDB = {
 // personalMovieDB.movies[a] = b;
 // personalMovieDB.movies[c] = d;
 
-for (let i = 0; i < 2; i++) {
-    const a = prompt('Last of watched films?', ''),
-          b = prompt('Whats your rating?', '');
 
-    if (a != null && b != null && a != '' && b != '' && a.length < 50) {
-        personalMovieDB.movies[a] = b;
-        console.log('Done');
+
+function remeberMyFilms(){
+    for (let i = 0; i < 2; i++) {
+        const a = prompt('Last of watched films?', ''),
+              b = prompt('Whats your rating?', '');
+    
+        if (a != null && b != null && a != '' && b != '' && a.length < 50) {
+            personalMovieDB.movies[a] = b;
+            console.log('Done');
+        } else {
+            console.log('Error');
+            i--;
+        }
+    }
+}
+remeberMyFilms();
+
+
+function detectPersonalLevel() {
+    if (personalMovieDB.count < 10) {
+        console.log("Few movies");
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
+        console.log('You are good viwer');
+    } else if (personalMovieDB.count >= 30) {
+        console.log('You are film lover');
     } else {
         console.log('Error');
-        i--;
+    }
+}
+detectPersonalLevel();
+
+
+function showMyDB (hidden) {
+    if (!hidden){
+        console.log(personalMovieDB);
     }
 }
 
-// if (personalMovieDB.count < 10) {
-//     console.log("Few movies");
-// } else if (personalMovieDB.count >= 10 && personalMovieDB.count < 30) {
-//     console.log('You are good viwer');
-// } else if (personalMovieDB.count >= 30) {
-//     console.log('You are film lover');
-// } else {
-//     console.log('Error');
-// }
+showMyDB(personalMovieDB.privat);
 
-while (personalMovieDB.count < 10) {
-    console.log("Few movies");
+
+function wtiteYourGenres() {
+    for (let i = 1; i <= 3; i++) {
+        personalMovieDB.genres[i - 1] = prompt(`Your favourite genre number ${i}?`);
+    }
 }
+wtiteYourGenres();
+
+
 
 console.log(personalMovieDB);
 
